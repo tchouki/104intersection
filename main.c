@@ -7,6 +7,18 @@
 
 #include "include/my.h"
 
+static void print_help(void)
+{
+    printf("USAGE\n");
+    printf("\t./104intersection opt xp yp zp xv yv zv p\n");
+    printf("\nDESCRIPTION\n");
+    printf("\topt\t\tsurface option: 1 for sphere, 2 for cylinder, 3 for a cone\n");
+    printf("\t(xp, yp, zp)\tcoordinates of a point by which the light ray passes through\n");
+    printf("\t(xv, yv, zv)\tcoordinates of a vector parallel to the light ray\n");
+    printf("\tp\t\tparameter: radius of the sphere, radius of the cylinder, or\n");
+    printf("\t\t\tangle formed by the cone and the Z-axis\n");
+}
+
 void sphere(double opt, double xp, double yp, double zp, double xv, double yv, double zv, double p)
 {
 	double a = pow(xv, 2) + pow(yv, 2) + pow(zv, 2);
@@ -96,8 +108,13 @@ int check_param(char **argv)
 
 int main(int argc, char **argv)
 {
-	if (argc != 9)
+	if (argc != 9) {
+        if (argc == 2 && argv[1][0] == '-' && argv[1][1] == 'h' && argv[1][2] == '\0') {
+            print_help();
+            return (0);
+        }
 		return (84);
+    }
 	if (check_param(argv) == 84)
 		return (84);
 	double opt = atof(argv[1]);
